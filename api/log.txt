@@ -1,2 +1,12 @@
 RECV:{"message":"cTGFD"}
 RECV:{"message":"cTGFDasdf"}
+SEND:{"message":"initial"}
+SEND:{"message":"initial"}
+SEND:{"message":"initial"}
+RECV:{"message":"dodjd"}
+RECV:{"message":"fsdafasd"}
+RECV:{"message":"fsafdsa"}
+SEND:{"message":"initial"}
+SEND:{"message":"initial"}
+RECV:{"message":"fsafdsa"}
+SEND:{"message":"initial"}

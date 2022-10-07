@@ -39,4 +39,4 @@ const sdk = {
   },
 };
 
-export default sdk
+export default sdk;
