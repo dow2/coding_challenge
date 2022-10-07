@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket</title>
+  </head>
+  <body>
+    <button id="disconnect">Disconnect</button>
+    <form id="send">
+      <input id="message" />
+      <button>Send</button>
+    </form>
+    <ul id="messages"></ul>
+    <script type="module" src="client-sdk.js"></script>
+    <script
+      src="https://cdn.socket.io/3.1.3/socket.io.min.js"
+      integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module">
+      import { sdk } from './client-sdk.js';
+      const socket = io();
+      const messagesList = document.getElementById('messages');
+      sdk.connect(socket, messagesList);
+      sdk.on('message', (message) => {
+        console.log(
+          'Received',
+          message.id, // Random id of your preference
+          message.content, // String or JSON object
+          message.sentAt // Message sent at
+        );
+      });
+
+      const disconnectButton = document.getElementById('disconnect');
+      disconnectButton.addEventListener('click', () => {
+        sdk.disconnect();
+      });
+
+      socket.on('relay', (message) => {
+        console.log('relay test:', message);
+        const item = document.createElement('li');
+        const string = JSON.stringify(message.content);
+        item.innerHTML = `RELAY:${string}`;
+        item.id = message.id;
+        messagesList.append(item);
+      });
+      const sendForm = document.getElementById('send');
+      const messageInput = document.getElementById('message');
+      sendForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const content = { message: messageInput.value };
+        sdk.send(content);
+      });
+    </script>
+  </body>
+</html>
